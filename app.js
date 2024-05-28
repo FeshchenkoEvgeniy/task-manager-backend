@@ -3,7 +3,7 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const { boardsRouter, columnsRouter, usersRouter, tasksRouter, backgroundsRouter } = require("./routers/api");
+const { boardsRouter, columnsRouter, usersRouter, tasksRouter, backgroundsRouter,employeesRouter  } = require("./routers/api");
 
 const app = express();
 
@@ -18,6 +18,7 @@ app.use("/api/boards", boardsRouter);
 app.use("/api/columns", columnsRouter);
 app.use("/api/tasks",  tasksRouter);
 app.use("/api/backgrounds",  backgroundsRouter);
+app.use("/api/employees", employeesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ status: "failed", code: 404, data: { message: "Not found" } });

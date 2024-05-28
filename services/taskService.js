@@ -20,7 +20,7 @@ class TaskService {
   }
 
   async getAll(column) {
-    const allTasks = await Task.find({ column }, "-createdAt -updatedAt");
+    const allTasks = await Task.find({ column }, "-createdAt -updatedAt").populate('assignee');
     if (!allTasks) {
       return null;
     }
@@ -28,7 +28,7 @@ class TaskService {
   }
 
   async getById(id) {
-    const task = await Task.findOne({ _id: id }, "-createdAt -updatedAt");
+    const task = await Task.findOne({ _id: id }, "-createdAt -updatedAt").populate('assignee');
     if (!task) {
       return null;
     }
@@ -42,7 +42,7 @@ class TaskService {
       {
         new: true,
         select: "-createdAt -updatedAt -title -description -priority -deadline",
-      },
+      }
     );
     if (!result) {
       return null;
@@ -50,12 +50,9 @@ class TaskService {
     return result;
   }
 
-  async update(id, data) {
-    const result = await Task.findByIdAndUpdate(id, { ...data }, { new: true, select: "-createdAt -updatedAt" });
-    if (!result) {
-      return null;
-    }
-
+  async update(taskId, data) {
+    console.log(`Updating task with ID: ${taskId}, Data:`, data); // Логування для діагностики
+    const result = await Task.findByIdAndUpdate(taskId, data, { new: true }).populate('assignee');
     return result;
   }
 }

@@ -36,6 +36,11 @@ const taskSchema = new Schema(
       type: Number,
       required: [true, "Set task index"],
     },
+    assignee: {
+      type: Schema.Types.ObjectId,
+      ref: 'employee',
+      required: [true, "Set employee for task"],
+    },
   },
   { versionKey: false, timestamps: true },
 );
@@ -51,6 +56,7 @@ const addTaskSchema = Joi.object({
   deadline: Joi.string().required(),
   column: Joi.string().required(),
   index: Joi.number().required(),
+  assignee: Joi.string().required(),
 });
 
 const editTaskSchema = Joi.object({
@@ -58,6 +64,7 @@ const editTaskSchema = Joi.object({
   description: Joi.string(),
   priority: Joi.string(),
   deadline: Joi.string(),
+  assignee: Joi.string(),
 });
 
 const changeTaskColumn = Joi.object({

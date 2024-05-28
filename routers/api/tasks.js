@@ -16,7 +16,7 @@ router.put(
   isValidId("taskId"),
   isReqObject,
   validateBody(taskSchemas.editTaskSchema),
-  ctrl.editTask,
+  ctrl.editTask
 );
 router.patch(
   "/:taskId",
@@ -24,7 +24,7 @@ router.patch(
   isValidId("taskId"),
   isReqObject,
   validateBody(taskSchemas.changeTaskColumn),
-  ctrl.changeTaskColumn,
+  ctrl.changeTaskColumn
 );
 
 module.exports = router;
