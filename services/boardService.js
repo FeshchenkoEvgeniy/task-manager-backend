@@ -37,6 +37,22 @@ const getOne = async id => {
                   from: "tasks",
                   localField: "_id",
                   foreignField: "column",
+                  pipeline: [
+                    {
+                      $lookup: {
+                        from: "employees",
+                        localField: "assignee",
+                        foreignField: "_id",
+                        as: "assignee",
+                      },
+                    },
+                    {
+                      $unwind: {
+                        path: "$assignee",
+                        preserveNullAndEmptyArrays: true,
+                      },
+                    },
+                  ],
                   as: "tasks",
                 },
               },
@@ -65,6 +81,7 @@ const getOne = async id => {
                 column: 1,
                 owner: 1,
                 index: 1,
+                assignee: { _id: 1, firstName: 1, lastName: 1 },
               },
             },
           },
